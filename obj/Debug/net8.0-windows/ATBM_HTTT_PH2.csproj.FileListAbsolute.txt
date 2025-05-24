@@ -1,5 +1,4 @@
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.csproj.AssemblyReference.cache
-C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Forms.LoginForm.resources
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.csproj.GenerateResource.cache
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.AssemblyInfoInputs.cache
@@ -60,3 +59,7 @@ C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\refint\ATBM_H
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.pdb
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.genruntimeconfig.cache
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ref\ATBM_HTTT_PH2.dll
+C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.MainForm.resources
+C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.sourcelink.json
+C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.LoginForm.resources
+C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.NVCBForm.resources

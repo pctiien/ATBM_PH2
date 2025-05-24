@@ -1,8 +1,5 @@
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using DotNetEnv;
-using Oracle.ManagedDataAccess.Client;
 using Microsoft.Extensions.DependencyInjection;
-using ATBM_HTTT_PH2.Forms;
+using ATBM_HTTT_PH2.Form;
 
 namespace ATBM_HTTT_PH2
 {
@@ -15,23 +12,17 @@ namespace ATBM_HTTT_PH2
         static void Main()
         {
 
-            var services = new ServiceCollection();
+            //var services = new ServiceCollection();
 
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IRoleService, RoleService>();
-            //services.AddScoped<IObjectService, ObjectService>();
 
-            //services.AddTransient<UserForm>();
-            //services.AddTransient<RoleForm>();
-            //services.AddTransient<ObjectForm>();
+            //var serviceProvider = services.BuildServiceProvider();
 
-            //services.AddTransient<MainForm>();
+            //ApplicationConfiguration.Initialize();
 
-            var serviceProvider = services.BuildServiceProvider();
-
+            //Application.Run(new LoginForm(services));
             ApplicationConfiguration.Initialize();
 
-            Application.Run(new LoginForm(services));
+            Application.Run(new LoginForm());
         }
     }
 }
