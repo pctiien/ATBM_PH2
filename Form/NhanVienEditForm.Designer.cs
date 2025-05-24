@@ -29,7 +29,7 @@
 
             this.txtMaNV.PlaceholderText = "Mã nhân viên";
             this.txtHoTen.PlaceholderText = "Họ tên";
-            this.cbPhai.Items.AddRange(new object[] { "NAM", "NU" });
+            this.cbPhai.Items.AddRange(new object[] { "Nam", "Nữ" });
             this.txtLuong.PlaceholderText = "Lương";
             this.txtPhuCap.PlaceholderText = "Phụ cấp";
             this.txtDienThoai.PlaceholderText = "Điện thoại";

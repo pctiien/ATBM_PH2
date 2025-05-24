@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using ATBM_HTTT_PH2.Model;
 using ATBM_HTTT_PH2.Service;
@@ -59,11 +60,17 @@ namespace ATBM_HTTT_PH2.Form
                 NhanVienData.VAITRO = txtVaiTro.Text.Trim();
                 NhanVienData.MADV = txtMaDV.Text.Trim();
 
+                if(_isEditMode)
+                    _INhanVienService.UpdateNhanVien(NhanVienData);
+                else
+                    _INhanVienService.AddNhanVien(NhanVienData);
+                
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 MessageBox.Show($"Lỗi khi lưu nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using ATBM_HTTT_PH2.Model;
 using ATBM_HTTT_PH2.Repository;
 using ATBM_HTTT_PH2.Util;
+using System.Globalization;
+using System.Data;
 
 namespace UniversityManagementSystem.Repositories
 {
@@ -84,42 +86,65 @@ namespace UniversityManagementSystem.Repositories
 
         public void Add(NhanVien nhanVien)
         {
-            string sql = @"INSERT INTO NHANVIEN (MANV, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, VAITRO, MADV)
-                              VALUES (:manv, :hoten, :phai, :ngsinh, :luong, :phucap, :dt, :vaitro, :madv)";
-            using (var command = new OracleCommand(sql, oracleConnection))
+            try
             {
-                command.Parameters.Add(new OracleParameter("manv", nhanVien.MANV));
-                command.Parameters.Add(new OracleParameter("hoten", nhanVien.HOTEN));
-                command.Parameters.Add(new OracleParameter("phai", nhanVien.PHAI));
-                command.Parameters.Add(new OracleParameter("ngsinh", nhanVien.NGSINH));
-                command.Parameters.Add(new OracleParameter("luong", nhanVien.LUONG));
-                command.Parameters.Add(new OracleParameter("phucap", nhanVien.PHUCAP));
-                command.Parameters.Add(new OracleParameter("dt", nhanVien.DT));
-                command.Parameters.Add(new OracleParameter("vaitro", nhanVien.VAITRO));
-                command.Parameters.Add(new OracleParameter("madv", nhanVien.MADV));
-                command.ExecuteNonQuery();
+                string sql = @"INSERT INTO NHANVIEN (MANV, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, VAITRO, MADV)
+                              VALUES (:manv, :hoten, :phai, :ngsinh, :luong, :phucap, :dt, :vaitro, :madv)";
+                using (var command = new OracleCommand(sql, oracleConnection))
+                {
+                    command.Parameters.Add("manv", OracleDbType.NVarchar2).Value = nhanVien.MANV.Trim();
+                    command.Parameters.Add("hoten", OracleDbType.NVarchar2).Value = nhanVien.HOTEN;
+                    command.Parameters.Add("phai", OracleDbType.NVarchar2).Value = String.IsNullOrEmpty(nhanVien.PHAI) ? "Nam" : nhanVien.PHAI;
+                    command.Parameters.Add(new OracleParameter("ngsinh", nhanVien.NGSINH?.ToString("dd-MMM-yy", CultureInfo.InvariantCulture)));
+                    command.Parameters.Add("luong", OracleDbType.Decimal).Value = nhanVien.LUONG;
+                    command.Parameters.Add("phucap", OracleDbType.Decimal).Value = nhanVien.PHUCAP;
+                    command.Parameters.Add("dt", OracleDbType.NVarchar2).Value = nhanVien.DT;
+                    command.Parameters.Add("vaitro", OracleDbType.NVarchar2).Value = nhanVien.VAITRO;
+                    command.Parameters.Add("madv", OracleDbType.NVarchar2).Value = nhanVien.MADV;
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
 
         public void Update(NhanVien nhanVien)
         {
-            string sql = @"UPDATE NHANVIEN 
-                              SET HOTEN = :hoten, PHAI = :phai, NGSINH = :ngsinh, 
-                                  LUONG = :luong, PHUCAP = :phucap, DT = :dt, 
-                                  VAITRO = :vaitro, MADV = :madv
-                              WHERE MANV = :manv";
-            using (var command = new OracleCommand(sql, oracleConnection))
+            try
             {
-                command.Parameters.Add(new OracleParameter("manv", nhanVien.MANV));
-                command.Parameters.Add(new OracleParameter("hoten", nhanVien.HOTEN));
-                command.Parameters.Add(new OracleParameter("phai", nhanVien.PHAI));
-                command.Parameters.Add(new OracleParameter("ngsinh", nhanVien.NGSINH));
-                command.Parameters.Add(new OracleParameter("luong", nhanVien.LUONG));
-                command.Parameters.Add(new OracleParameter("phucap", nhanVien.PHUCAP));
-                command.Parameters.Add(new OracleParameter("dt", nhanVien.DT));
-                command.Parameters.Add(new OracleParameter("vaitro", nhanVien.VAITRO));
-                command.Parameters.Add(new OracleParameter("madv", nhanVien.MADV));
-                command.ExecuteNonQuery();
+                string sql = @"UPDATE NHANVIEN 
+               SET HOTEN = :hoten, PHAI = :phai, NGSINH = :ngsinh, 
+                   LUONG = :luong, PHUCAP = :phucap, DT = :dt, 
+                   VAITRO = :vaitro, MADV = :madv
+               WHERE MANV = :manv";
+
+                using (var command = new OracleCommand(sql, oracleConnection))
+                {
+                    if (oracleConnection.State != ConnectionState.Open)
+                        oracleConnection.Open();
+
+                    command.BindByName = true;
+
+                    command.Parameters.Add("hoten", OracleDbType.NVarchar2).Value = nhanVien.HOTEN;
+                    command.Parameters.Add("phai", OracleDbType.NVarchar2).Value = string.IsNullOrEmpty(nhanVien.PHAI) ? "Nam" : nhanVien.PHAI;
+                    command.Parameters.Add("ngsinh", OracleDbType.Date).Value = nhanVien.NGSINH ?? (object)DBNull.Value;
+                    command.Parameters.Add("luong", OracleDbType.Decimal).Value = nhanVien.LUONG ?? (object)DBNull.Value;
+                    command.Parameters.Add("phucap", OracleDbType.Decimal).Value = nhanVien.PHUCAP ?? (object)DBNull.Value;
+                    command.Parameters.Add("dt", OracleDbType.NVarchar2).Value = nhanVien.DT ?? (object)DBNull.Value;
+                    command.Parameters.Add("vaitro", OracleDbType.NVarchar2).Value = nhanVien.VAITRO ?? (object)DBNull.Value;
+                    command.Parameters.Add("madv", OracleDbType.NVarchar2).Value = nhanVien.MADV ?? (object)DBNull.Value;
+                    command.Parameters.Add("manv", OracleDbType.NVarchar2).Value = nhanVien.MANV ?? "NV001";
+
+                    int affectedRows = command.ExecuteNonQuery();
+                    Console.WriteLine($"Số dòng bị ảnh hưởng: {affectedRows}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
