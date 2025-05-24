@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ATBM_HTTT_PH2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c89518ad2973244096dc96981116561d72efe6c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf60757d083fd260aa463d75cf813e597617342b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ATBM_HTTT_PH2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ATBM_HTTT_PH2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

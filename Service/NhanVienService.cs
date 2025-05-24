@@ -45,5 +45,10 @@ namespace ATBM_HTTT_PH2.Service
         {
             _nhanVienRepository.Delete(manv);
         }
+
+        public List<NhanVien> GetAll()
+        {
+            return _nhanVienRepository.getAll();
+        }
     }
 }

@@ -35,10 +35,10 @@ namespace ATBM_HTTT_PH2.Form
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                     AddTab("Quản lý đơn vị", new TRGDVForm(_nhanVienService));
                     break;
-                //case "NV TCHC":
-                //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
-                //    AddTab("Quản lý nhân viên", new NVTCHCForm(_nhanVienService));
-                //    break;
+                case "NV TCHC":
+                    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
+                    AddTab("Quản lý nhân viên", new NVTCHCForm(_nhanVienService));
+                    break;
                 //case "GV":
                 //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                 //    AddTab("Phân công giảng dạy", new GVForm(_nhanVienService));

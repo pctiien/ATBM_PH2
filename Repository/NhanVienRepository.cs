@@ -132,5 +132,33 @@ namespace UniversityManagementSystem.Repositories
                 command.ExecuteNonQuery();
             }
         }
+
+        public List<NhanVien> getAll()
+        {
+            var nhanViens = new List<NhanVien>();
+            string sql = "SELECT * FROM NHANVIEN";
+            using (var command = new OracleCommand(sql, oracleConnection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        nhanViens.Add(new NhanVien
+                        {
+                            MANV = reader["MANV"].ToString(),
+                            HOTEN = reader["HOTEN"].ToString(),
+                            PHAI = reader["PHAI"].ToString(),
+                            NGSINH = reader["NGSINH"] != DBNull.Value ? Convert.ToDateTime(reader["NGSINH"]) : null,
+                            DT = reader["DT"].ToString(),
+                            VAITRO = reader["VAITRO"].ToString(),
+                            MADV = reader["MADV"].ToString(),
+                            LUONG = Decimal.Parse(reader["LUONG"].ToString()),
+                            PHUCAP = Decimal.Parse(reader["PHUCAP"].ToString())
+                        });
+                    }
+                }
+            }
+            return nhanViens;
+        }
     }
 }

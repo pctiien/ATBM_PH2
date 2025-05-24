@@ -63,3 +63,5 @@ C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.sourcelink.json
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.LoginForm.resources
 C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.NVCBForm.resources
+C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.NVTCHCForm.resources
+C:\Users\pctie\source\repos\ATBM_HTTT_PH2\obj\Debug\net8.0-windows\ATBM_HTTT_PH2.Form.TRGDVForm.resources
