@@ -35,7 +35,7 @@ namespace ATBM_HTTT_PH2.Util
                 command.Parameters.Add(new OracleParameter("manv", CurrentUser));
                 var result = command.ExecuteScalar();
                 Console.WriteLine(result);
-                return result?.ToString() ?? "SINHVIEN"; // Mặc định là SINHVIEN nếu không tìm thấy trong NHANVIEN
+                return result?.ToString() ?? "SINHVIEN"; 
             }
         }
     }

@@ -10,7 +10,7 @@ namespace ATBM_HTTT_PH2.Service
 {
     public interface IStudentService
     {
-        List<Student> GetStudents();
-        void CreateStudent(Student student);
+        List<SinhVien> GetStudents();
+        void CreateStudent(SinhVien student);
     }
 }

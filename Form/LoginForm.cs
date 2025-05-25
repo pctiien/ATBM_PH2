@@ -44,6 +44,11 @@ namespace ATBM_HTTT_PH2.Form
                 });
                 services.AddScoped<INhanVienRepository, NhanVienRepository>();
                 services.AddScoped<INhanVienService, NhanVienService>();
+                services.AddScoped<IPhanCongRepository, PhanCongRepository>();
+                services.AddScoped<IPhanCongService, PhanCongService>();
+                services.AddScoped<ISinhVienRepository, SinhVienRepository>();
+                services.AddScoped<ISinhVienService, SinhVienService>();
+
                 services.AddTransient<SessionContext>();
                 services.AddTransient<MainForm>();
 

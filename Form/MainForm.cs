@@ -8,12 +8,16 @@ namespace ATBM_HTTT_PH2.Form
     public partial class MainForm : System.Windows.Forms.Form
     {
         private readonly INhanVienService _nhanVienService;
+        private readonly IPhanCongService _phanCongService;
+        private readonly ISinhVienService _sinhVienService;
         private readonly SessionContext _sessionContext;
 
-        public MainForm(INhanVienService nhanVienService, SessionContext sessionContext)
+        public MainForm(INhanVienService nhanVienService,IPhanCongService phanCongService, ISinhVienService sinhVienService, SessionContext sessionContext)
         {
             InitializeComponent();
             _nhanVienService = nhanVienService;
+            _phanCongService = phanCongService;
+            _sinhVienService = sinhVienService;
             _sessionContext = sessionContext;
             ConfigureInterface();
         }
@@ -34,19 +38,21 @@ namespace ATBM_HTTT_PH2.Form
                 case "TRGĐV":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                     AddTab("Quản lý đơn vị", new TRGDVForm(_nhanVienService));
+                    AddTab("Quản lý phân công giảng dạy trong đơn vị", new TRGDV_MOMONForm(_nhanVienService,_phanCongService));
+
                     break;
                 case "NV TCHC":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                     AddTab("Quản lý nhân viên", new NVTCHCForm(_nhanVienService));
                     break;
-                //case "GV":
-                //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
-                //    AddTab("Phân công giảng dạy", new GVForm(_nhanVienService));
-                //    break;
-                //case "NV PĐT":
-                //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
-                //    AddTab("Quản lý môn học", new NVPDTForm(_nhanVienService));
-                //    break;
+                case "GV":
+                    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
+                    AddTab("Phân công giảng dạy", new GVForm(_nhanVienService,_phanCongService));
+                    break;
+                case "NV PĐT":
+                    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
+                    AddTab("Quản lý môn học", new NVPDTForm(_nhanVienService, _phanCongService));
+                    break;
                 //case "NV PKT":
                 //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                 //    AddTab("Quản lý điểm", new NVPKTForm(_nhanVienService));
@@ -55,9 +61,9 @@ namespace ATBM_HTTT_PH2.Form
                 //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                 //    AddTab("Quản lý sinh viên", new NVCTSVForm(_sinhVienService));
                 //    break;
-                //case "SINHVIEN":
-                //    AddTab("Thông tin sinh viên", new SinhVienForm(_sinhVienService));
-                //    break;
+                case "SINHVIEN":
+                    AddTab("Môn mở của khoa", new SINHVIENForm(_sinhVienService, _phanCongService));
+                    break;
                 default:
                     MessageBox.Show("Vai trò không được hỗ trợ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();

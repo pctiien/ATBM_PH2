@@ -12,14 +12,6 @@ namespace ATBM_HTTT_PH2
         static void Main()
         {
 
-            //var services = new ServiceCollection();
-
-
-            //var serviceProvider = services.BuildServiceProvider();
-
-            //ApplicationConfiguration.Initialize();
-
-            //Application.Run(new LoginForm(services));
             ApplicationConfiguration.Initialize();
 
             Application.Run(new LoginForm());
