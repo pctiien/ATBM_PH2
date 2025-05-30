@@ -1,3 +1,10 @@
+using System;
+using System.Data;
+using System.Windows.Forms;
+using Oracle.ManagedDataAccess.Client;
+
+namespace OLSNotificationApp
+{
  public partial class SendNotificationForm : Form
     {
         public SendNotificationForm()
