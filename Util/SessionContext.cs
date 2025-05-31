@@ -14,6 +14,11 @@ namespace ATBM_HTTT_PH2.Util
         public SessionContext(OracleConnection _oracleConnection)
         {
             oracleConnection = _oracleConnection;
+
+            if (oracleConnection.State != System.Data.ConnectionState.Open)
+            {
+                oracleConnection.Open();
+            }
         }
 
         public string CurrentUser
@@ -22,7 +27,7 @@ namespace ATBM_HTTT_PH2.Util
             {
                 using (var command = new OracleCommand("SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL", oracleConnection))
                 {
-                    return command.ExecuteScalar()?.ToString();
+                    return command.ExecuteScalar()?.ToString() ?? "UNKNOWN";
                 }
             }
         }
