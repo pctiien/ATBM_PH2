@@ -9,7 +9,7 @@ namespace ATBM_HTTT_PH2
     internal static class Program
     {
         /// <summary>
-        ///  Điểm khởi đầu chính của ứng dụng.
+        /// Điểm khởi đầu chính của ứng dụng.
         /// </summary>
         [STAThread]
         static void Main()
@@ -27,10 +27,7 @@ namespace ATBM_HTTT_PH2
             // Khởi tạo DI Container
             var services = new ServiceCollection();
 
-          
-            // services.AddScoped<INotificationService, NotificationService>();
-
-            // Đăng ký các Form nếu bạn muốn quản lý Form bằng DI
+            // Đăng ký các Form bằng DI
             services.AddTransient<LoginForm>();
             services.AddTransient<SendNotificationForm>();
             services.AddTransient<ReceiveNotificationForm>();
