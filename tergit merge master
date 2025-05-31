@@ -1,0 +1,36 @@
+* [33m7e6ea53[m[33m ([m[1;32mmaster[m[33m)[m Them yc1_34
+[31m|[m * [33ma849f83[m[33m ([m[1;31morigin/yc2[m[33m)[m Delete Services directory
+[31m|[m * [33mfcfd1d0[m thong bao nhan
+[31m|[m * [33m0bb09ed[m truy xuat danh sach thong bao
+[31m|[m [32m|[m * [33mca65b94[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32myc1_34[m[33m, [m[1;31morigin/yc1_34[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Delete Services directory
+[31m|[m [32m|[m * [33m4456ca1[m Create NotificationService.cs
+[31m|[m [32m|[m * [33m231f557[m thong bao co nhan phu hop moi hien thi
+[31m|[m [32m|[m * [33m2d74585[m Merge pull request #1 from pctiien/yc2
+[31m|[m [32m|[m[31m/[m[32m|[m 
+[31m|[m[31m/[m[32m|[m[32m/[m  
+[31m|[m *   [33md655b4e[m Merge branch 'master' into yc2
+[31m|[m [36m|[m[31m\[m  
+[31m|[m [36m|[m[31m/[m  
+[31m|[m[31m/[m[36m|[m   
+[31m|[m * [33m1a4be00[m Update Program.cs
+[31m|[m * [33m85696d4[m Update MainForm.cs
+[31m|[m * [33m2fb94de[m thong bao co nhan phu hop moi hien thi
+[31m|[m * [33m2d1429c[m truy xuat danh sach thong bao
+[31m|[m * [33m140e157[m tao form chinh
+[31m|[m * [33ma166d04[m them thong bao mau va nhan
+[31m|[m * [33md791df8[m them user mau
+[31m|[m * [33meeb25eb[m tao chinh sach OLS va nhan
+[31m|[m * [33m2c9b851[m tao bang user va thong bao
+[31m|[m * [33m02a38c2[m them co che OLS thong bao
+[31m|[m * [33m8fb39ae[m gui thong bao nhan OLS
+[31m|[m * [33m04ad586[m nhan va hien thi thong bao
+[31m|[m * [33me5d73fb[m gui thong bao nhan OLS
+[31m|[m [1;31m|[m * [33m0d141c6[m[33m ([m[1;31morigin/yc3[m[33m)[m ghi nhat ki he thong
+[31m|[m [1;31m|[m[31m/[m  
+[31m|[m[31m/[m[1;31m|[m   
+* [1;31m|[m [33m547153e[m yc1-cau2
+* [1;31m|[m [33mfd5fc96[m yc1-cau1
+* [1;31m|[m [33mcd19d97[m yc1-cau-1
+* [1;31m|[m [33mcf60757[m yc1-cau-1
+[1;31m|[m[1;31m/[m  
+* [33m8c89518[m first commit

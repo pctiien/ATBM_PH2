@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ATBM_HTTT_PH2.Util;
 using ATBM_HTTT_PH2.Form;
 using ATBM_HTTT_PH2.Repository;
@@ -23,6 +23,7 @@ namespace ATBM_HTTT_PH2.Form
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
             string serviceNameOrSID = txtServiceName.Text;
+            username = username.ToUpper();
 
             try
             {
@@ -48,19 +49,36 @@ namespace ATBM_HTTT_PH2.Form
                 services.AddScoped<IPhanCongService, PhanCongService>();
                 services.AddScoped<ISinhVienRepository, SinhVienRepository>();
                 services.AddScoped<ISinhVienService, SinhVienService>();
+                services.AddScoped<IDangKyRepository, DangKyRepository>();
+                services.AddScoped<IDangKyService, DangKyService>();
 
-                services.AddTransient<SessionContext>();
+
+
+                services.AddTransient<SessionContext>(provider =>
+                {
+                    var roleConn = factory.createConnection();
+                    if (roleConn.State != System.Data.ConnectionState.Open)
+                        roleConn.Open();
+
+                    return new SessionContext(roleConn); // Tự động lấy CurrentUser và role bên trong
+                });
+
                 services.AddTransient<MainForm>();
 
-                MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 var serviceProvider = services.BuildServiceProvider();
-                var mainForm = serviceProvider.GetRequiredService<MainForm>();
+                try
+                {
+                    var mainForm = serviceProvider.GetRequiredService<MainForm>();
+                    MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                Hide();
-
-                mainForm.FormClosed += (s, args) => Close();
-                mainForm.Show();
+                    Hide();
+                    mainForm.FormClosed += (s, args) => Close();
+                    mainForm.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi khởi tạo MainForm:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {

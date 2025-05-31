@@ -13,6 +13,10 @@ namespace ATBM_HTTT_PH2.Service
             _phanCongRepository = phanCongRepository;
         }
 
+        public List<DangKyModel> GetDanhSachMonMo()
+        {
+            return _phanCongRepository.GetMonMo();
+        }
         public List<MoMon> GetPhanCongGV(string magv)
         {
             return _phanCongRepository.GetPhanCongGV(magv);
@@ -45,6 +49,25 @@ namespace ATBM_HTTT_PH2.Service
         public List<MoMon> GetPhanCongSinhVien(string manv)
         {
             return _phanCongRepository.GetPhanCongSinhVien(manv);
+        }
+
+        public List<BangDiemModel> GetBangDiemBySinhVien(string maSV)
+        {
+            return _phanCongRepository.GetBangDiemBySinhVien(maSV);
+        }
+
+        public List<BangDiemModel> GetBangDiemByGiangVien(string maGV)
+        {
+            return _phanCongRepository.GetBangDiemByGiangVien(maGV);
+        }
+        public List<BangDiemModel> GetAllBangDiem()
+        {
+            return _phanCongRepository.GetAllBangDiem();
+        }
+
+        public bool UpdateDiem(string maSV, string maMM, int? diemQT, int? diemCK, int? diemTH)
+        {
+            return _phanCongRepository.UpdateDiem(maSV, maMM, diemQT, diemCK, diemTH);
         }
     }
 }
