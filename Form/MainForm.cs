@@ -15,7 +15,12 @@ namespace ATBM_HTTT_PH2.Forms
         private readonly SessionContext _sessionContext;
         private string _currentUser;
 
-        public MainForm(INotificationService notificationService, INhanVienService nhanVienService, IPhanCongService phanCongService, ISinhVienService sinhVienService, SessionContext sessionContext)
+        public MainForm(
+            INotificationService notificationService,
+            INhanVienService nhanVienService,
+            IPhanCongService phanCongService,
+            ISinhVienService sinhVienService,
+            SessionContext sessionContext)
         {
             InitializeComponent();
             _notificationService = notificationService;

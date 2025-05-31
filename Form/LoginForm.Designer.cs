@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace ATBM_HTTT_PH2.Forms
+namespace ATBM_HTTT_PH2.Form
 {
     partial class LoginForm
     {

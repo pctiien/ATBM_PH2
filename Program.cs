@@ -3,6 +3,9 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using DotNetEnv;
 using ATBM_HTTT_PH2.Forms;
+using ATBM_HTTT_PH2.Services;
+using ATBM_HTTT_PH2.Service;
+using ATBM_HTTT_PH2.Util;
 
 namespace ATBM_HTTT_PH2
 {
@@ -27,10 +30,18 @@ namespace ATBM_HTTT_PH2
             // Khởi tạo DI Container
             var services = new ServiceCollection();
 
-            // Đăng ký các Form bằng DI
+            // Đăng ký các dịch vụ
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INhanVienService, NhanVienService>();
+            services.AddScoped<IPhanCongService, PhanCongService>();
+            services.AddScoped<ISinhVienService, SinhVienService>();
+            services.AddScoped<SessionContext>();
+
+            // Đăng ký các Form
             services.AddTransient<LoginForm>();
             services.AddTransient<SendNotificationForm>();
             services.AddTransient<ReceiveNotificationForm>();
+            services.AddTransient<MainForm>(); // Register MainForm for DI
 
             var serviceProvider = services.BuildServiceProvider();
 

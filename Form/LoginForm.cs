@@ -1,20 +1,19 @@
-using System;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic.ApplicationServices;
-using Oracle.ManagedDataAccess.Client;
 using ATBM_HTTT_PH2.Util;
-namespace ATBM_HTTT_PH2.Forms
+using ATBM_HTTT_PH2.Form;
+using ATBM_HTTT_PH2.Repository;
+using ATBM_HTTT_PH2.Service;
+using UniversityManagementSystem.Repositories;
+using System.Windows.Forms;
+namespace ATBM_HTTT_PH2.Form
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : System.Windows.Forms.Form
     {
         private readonly ServiceCollection services;
-        public LoginForm(ServiceCollection services)
+        public LoginForm()
         {
             InitializeComponent();
-            this.services = services;
+            this.services = new ServiceCollection();
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -37,18 +36,35 @@ namespace ATBM_HTTT_PH2.Forms
                 var connection = factory.createConnection();
 
                 services.AddSingleton(new OracleConnectionFactory(connectionString));
+              
                 services.AddScoped(provider =>
                 {
                     var factory = provider.GetRequiredService<OracleConnectionFactory>();
                     return factory.createConnection();
                 });
+                services.AddScoped<INhanVienRepository, NhanVienRepository>();
+                services.AddScoped<INhanVienService, NhanVienService>();
+                services.AddScoped<IPhanCongRepository, PhanCongRepository>();
+                services.AddScoped<IPhanCongService, PhanCongService>();
+                services.AddScoped<ISinhVienRepository, SinhVienRepository>();
+                services.AddScoped<ISinhVienService, SinhVienService>();
+
+                services.AddTransient<SessionContext>();
+                services.AddTransient<MainForm>();
 
                 MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                var serviceProvider = services.BuildServiceProvider();
+                var mainForm = serviceProvider.GetRequiredService<MainForm>();
+
                 Hide();
+
+                mainForm.FormClosed += (s, args) => Close();
+                mainForm.Show();
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 MessageBox.Show("Login failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
