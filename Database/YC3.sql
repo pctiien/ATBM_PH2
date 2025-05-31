@@ -1,0 +1,63 @@
+-- ========================== YÊU CẦU 3: GHI NHẬT KÝ HỆ THỐNG ==============================
+
+-- 1. KÍCH HOẠT GHI NHẬT KÝ HỆ THỐNG (UNIFIED AUDIT)
+-- Kiểm tra xem Unified Auditing đã bật hay chưa
+SELECT VALUE FROM V$OPTION WHERE PARAMETER = 'Unified Auditing';
+-- Nếu chưa bật, cần restart Oracle với Unified Auditing bật từ đầu (ngoài phạm vi SQL)
+
+-- 2. STANDARD AUDIT – THEO DÕI USER TRÊN CÁC ĐỐI TƯỢNG
+-- Theo dõi hành vi SELECT, INSERT, UPDATE, DELETE thành công trên bảng NHANVIEN của các user cụ thể
+AUDIT SELECT, INSERT, UPDATE, DELETE
+  ON ADMIN.NHANVIEN
+  BY u4, u5, u6
+  WHENEVER SUCCESSFUL;
+
+-- Theo dõi hành vi EXECUTE thủ tục cập nhật điểm (giả sử tên thủ tục là UPDATE_DIEM_PROCEDURE) nếu thất bại
+AUDIT EXECUTE ON ADMIN.UPDATE_DIEM_PROCEDURE
+  BY u7
+  WHENEVER NOT SUCCESSFUL;
+
+-- 3a. FGA – GHI NHẬT KÝ: CẬP NHẬT ĐIỂM KHI KHÔNG PHẢI NV PKT
+BEGIN
+    DBMS_FGA.ADD_POLICY(
+        OBJECT_SCHEMA => 'ADMIN',
+        OBJECT_NAME => 'DANGKY',
+        POLICY_NAME => 'FGA_DIEM_NVPKT',
+        AUDIT_CONDITION => "SYS_CONTEXT('CTX_USER', 'VAITRO') != 'NV PKT'",
+        AUDIT_COLUMN => 'DIEMTH, DIEMQT, DIEMCK, DIEMTK',
+        STATEMENT_TYPES => 'UPDATE'
+    );
+END;
+/
+
+-- 3b. FGA – GHI NHẬT KÝ: ĐỌC/UPDATE LUONG, PHUCAP KHI KHÔNG PHẢI NV TCHC
+BEGIN
+    DBMS_FGA.ADD_POLICY(
+        OBJECT_SCHEMA => 'ADMIN',
+        OBJECT_NAME => 'NHANVIEN',
+        POLICY_NAME => 'FGA_LUONG_TCHC',
+        AUDIT_CONDITION => "SYS_CONTEXT('CTX_USER', 'VAITRO') != 'NV TCHC'",
+        AUDIT_COLUMN => 'LUONG, PHUCAP',
+        STATEMENT_TYPES => 'SELECT, UPDATE'
+    );
+END;
+/
+
+-- 3c. FGA – GHI NHẬT KÝ: SV SỬA ĐĂNG KÝ CỦA NGƯỜI KHÁC HOẶC QUÁ HẠN
+-- Giới hạn chỉnh sửa đăng ký đến ngày 01-10-2025
+BEGIN
+    DBMS_FGA.ADD_POLICY(
+        OBJECT_SCHEMA => 'ADMIN',
+        OBJECT_NAME => 'DANGKY',
+        POLICY_NAME => 'FGA_SV_SAIQUYDINH',
+        AUDIT_CONDITION => "(SYS_CONTEXT('CTX_USER', 'VAITRO') = 'SV' AND (MASV != USER OR SYSDATE > TO_DATE('01-10-2025','DD-MM-YYYY')))",
+        STATEMENT_TYPES => 'INSERT, DELETE, UPDATE'
+    );
+END;
+/
+
+-- 4. ĐỌC XUẤT DỮ LIỆU NHẬT KÝ HỆ THỐNG
+SELECT DBUSERNAME, EVENT_TIMESTAMP, ACTION_NAME, OBJECT_NAME, SQL_TEXT
+FROM UNIFIED_AUDIT_TRAIL
+WHERE OBJECT_NAME IN ('NHANVIEN', 'DANGKY')
+ORDER BY EVENT_TIMESTAMP DESC;
