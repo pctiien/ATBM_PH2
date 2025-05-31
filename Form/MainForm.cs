@@ -1,68 +1,84 @@
-﻿using ATBM_HTTT_PH2.Service;
+using System;
+using System.Windows.Forms;
+using ATBM_HTTT_PH2.Services;
+using ATBM_HTTT_PH2.Service;
 using ATBM_HTTT_PH2.Util;
 
-
-namespace ATBM_HTTT_PH2.Form
+namespace ATBM_HTTT_PH2.Forms
 {
-
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class MainForm : Form
     {
+        private readonly INotificationService _notificationService;
         private readonly INhanVienService _nhanVienService;
         private readonly IPhanCongService _phanCongService;
         private readonly ISinhVienService _sinhVienService;
         private readonly SessionContext _sessionContext;
+        private string _currentUser;
 
-        public MainForm(INhanVienService nhanVienService,IPhanCongService phanCongService, ISinhVienService sinhVienService, SessionContext sessionContext)
+        public MainForm(
+            INotificationService notificationService,
+            INhanVienService nhanVienService,
+            IPhanCongService phanCongService,
+            ISinhVienService sinhVienService,
+            SessionContext sessionContext)
         {
             InitializeComponent();
+            _notificationService = notificationService;
             _nhanVienService = nhanVienService;
             _phanCongService = phanCongService;
             _sinhVienService = sinhVienService;
             _sessionContext = sessionContext;
+        }
+
+        public void SetUser(string username)
+        {
+            _currentUser = username;
+            LoadNotifications();
             ConfigureInterface();
+        }
+
+        private void LoadNotifications()
+        {
+            var notifications = _notificationService.GetNotificationsForUser(_currentUser);
+            dgvNotifications.DataSource = notifications;
         }
 
         private void ConfigureInterface()
         {
-            // Cập nhật thông tin người dùng trên StatusStrip
             lblUserInfo.Text = $"Đăng nhập bởi: {_sessionContext.CurrentUser} - {_sessionContext.GetUserRole()}";
-            tabControlMain.TabPages.Clear(); // Xóa các tab mặc định
+            tabControlMain.TabPages.Clear();
 
-            // Thêm các tab dựa trên vai trò
             string role = _sessionContext.GetUserRole();
             switch (role)
             {
                 case "NVCB":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
+                    AddTab("Thông báo", new NotificationForm(_notificationService, _currentUser));
                     break;
                 case "TRGĐV":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                     AddTab("Quản lý đơn vị", new TRGDVForm(_nhanVienService));
-                    AddTab("Quản lý phân công giảng dạy trong đơn vị", new TRGDV_MOMONForm(_nhanVienService,_phanCongService));
-
+                    AddTab("Quản lý phân công giảng dạy trong đơn vị", new TRGDV_MOMONForm(_nhanVienService, _phanCongService));
+                    AddTab("Thông báo", new NotificationForm(_notificationService, _currentUser));
                     break;
                 case "NV TCHC":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                     AddTab("Quản lý nhân viên", new NVTCHCForm(_nhanVienService));
+                    AddTab("Thông báo", new NotificationForm(_notificationService, _currentUser));
                     break;
                 case "GV":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
-                    AddTab("Phân công giảng dạy", new GVForm(_nhanVienService,_phanCongService));
+                    AddTab("Phân công giảng dạy", new GVForm(_nhanVienService, _phanCongService));
+                    AddTab("Thông báo", new NotificationForm(_notificationService, _currentUser));
                     break;
                 case "NV PĐT":
                     AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
                     AddTab("Quản lý môn học", new NVPDTForm(_nhanVienService, _phanCongService));
+                    AddTab("Thông báo", new NotificationForm(_notificationService, _currentUser));
                     break;
-                //case "NV PKT":
-                //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
-                //    AddTab("Quản lý điểm", new NVPKTForm(_nhanVienService));
-                //    break;
-                //case "NV CTSV":
-                //    AddTab("Thông tin cá nhân", new NVCBForm(_nhanVienService));
-                //    AddTab("Quản lý sinh viên", new NVCTSVForm(_sinhVienService));
-                //    break;
                 case "SINHVIEN":
                     AddTab("Môn mở của khoa", new SINHVIENForm(_sinhVienService, _phanCongService));
+                    AddTab("Thông báo", new NotificationForm(_notificationService, _currentUser));
                     break;
                 default:
                     MessageBox.Show("Vai trò không được hỗ trợ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -71,7 +87,7 @@ namespace ATBM_HTTT_PH2.Form
             }
         }
 
-        private void AddTab(string tabName, System.Windows.Forms.Form form)
+        private void AddTab(string tabName, Form form)
         {
             TabPage tabPage = new TabPage(tabName);
             form.TopLevel = false;
@@ -84,14 +100,12 @@ namespace ATBM_HTTT_PH2.Form
 
         private void Logout_Click(object sender, EventArgs e)
         {
-            // Mở lại LoginForm và đóng MainForm
-            //loginForm.Show();
             this.Close();
         }
 
         private void Exit_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
         private void About_Click(object sender, EventArgs e)
@@ -101,7 +115,7 @@ namespace ATBM_HTTT_PH2.Form
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
     }
 }
